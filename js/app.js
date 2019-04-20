@@ -1,0 +1,18 @@
+require.config({
+	paths:{
+		angular:'plugins/angular',
+		angularAMD:'plugins/angularAMD',
+		uiRouter:'plugins/angular-ui-router',
+		uiBootstrap:'plugins/ui-bootstrap-tpls',
+		jquery:'plugins/jquery-1.11.3',
+		bootstrap:'plugins/bootstrap/js/bootstrap.min',
+		main:'config'
+	},
+	shim:{
+		angularAMD:['angular'],
+		uiRouter:['angular'],
+		uiBootstrap:['angular'],
+		bootstrap:['jquery']
+	},
+	deps:['main']
+});

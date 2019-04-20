@@ -1,0 +1,209 @@
+<div class="container-fluid">
+	<div class="col-md-12">
+		<div class="alert alert-info" role="alert">商品管理</div>
+		<div class="row">
+			<button type="button" class="btn btn-primary col-lg-1" ng-click='addMall()' data-toggle="modal" data-target="#myModal">新增</button>
+			<div class="col-lg-4 right">
+				<div class="input-group">
+					<input type="text" class="form-control">
+					<span class="input-group-btn"> 
+						<button class="btn btn-default" type="button">搜索</button> 
+					</span>
+				</div>
+			</div>
+		</div>
+		<br />
+		<table class="table table-striped">
+			<thead>
+				<td>商品ID</td>
+				<td>商品名称</td>
+				<!--<td>商品标题</td>
+				<td>商品内容</td>
+				<td>商品说明</td>-->
+				<td>商品价钱</td>
+				<td>商品数量</td>
+				<!--<td>商品尺寸</td>
+				<td>商品颜色</td>-->
+				<td>商品类型</td>
+				<td>操作</td>
+			</thead>
+			<tbody>
+				<tr ng-repeat='mall in list track by $index'>
+					<td>{{mall.m_id}}</td>
+					<td>{{mall.m_name}}</td>
+					<!--<td>{{mall.m_title}}</td>
+					<td>{{mall.m_content}}</td>
+					<td>{{mall.m_detail}}</td>-->
+					<td>{{mall.m_price}}</td>
+					<td>{{mall.m_number}}</td>
+					<!--<td>{{mall.m_size}}</td>-->
+					<!--<td>{{mall.m_color}}</td>-->
+					<td>{{mall.m_type}}</td>
+					<td>
+						<button type="button" class="btn btn-primary" ng-click='modify(mall)' data-toggle="modal" data-target="#myModalUpdata">修改</button>
+						<button type="button" class="btn btn-danger" ng-click='deleteMall(mall,$index)'>删除</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div>
+			<uib-pagination boundary-links='true' ng-change="selectPage()" next-text='下页' previous-text='上页' total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false">
+
+			</uib-pagination>
+		</div>
+	</div>
+</div>
+
+<!--模态框-->
+<!-- 增加商品 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header"> <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">增加商品</h4> </div>
+			<form class="form-horizontal" role="form" name="addMallForm" novalidate>
+				<div class="modal-body">
+					<div class="input-group">
+						<span class="input-group-addon">商品名称</span>
+						<input type="text" class="form-control" ng-model='addMall.name'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品标题</span>
+						<input type="text" class="form-control" ng-model='addMall.title'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品内容</span>
+						<input type="text" class="form-control" ng-model='addMall.content'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品说明</span>
+						<input type="text" class="form-control" ng-model='addMall.detail'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品价钱</span>
+						<input type="text" class="form-control" ng-model='addMall.price'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品数量</span>
+						<input type="text" class="form-control" ng-model='addMall.num'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品尺寸</span>
+						<!--<input type="text" class="form-control" ng-model='addMall.size'>-->
+
+						<select class="form-control" ng-model='addMall.size'>
+							<option ng-repeat='s in size track by $index'>
+								{{s.s_name}}
+							</option>
+						</select>
+
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品颜色</span>
+						<select class="form-control" ng-model='addMall.color'>
+							<option ng-repeat='c in color track by $index'>
+								{{c.c_name}}
+							</option>
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品类型</span>
+						<select class="form-control" ng-model='addMall.type'>
+							<option ng-repeat='t in type track by $index'>
+								{{t.t_name}}
+							</option>
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品图片</span>
+						<!--<img src="" class="img-responsive" alt="Responsive image">-->
+						<input id="specialrecommendfile" type="file" size="30" name="file"> 
+						<input type=hidden class="span5" id="specialRecommendPic" name="riIndexPic">
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" ng-click="saveMall()" class="btn btn-primary">确认</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--模态框-->
+<!-- 修改商品 -->
+<div class="modal fade" id="myModalUpdata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header"> <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			<h4 class="modal-title" id="myModalLabel">修改商品</h4> </div>
+			<form class="form-horizontal" role="form" name="modifyMallForm" novalidate>
+				<div class="modal-body">
+					<div class="input-group">
+						<span class="input-group-addon">商品&emsp;ID</span>
+						<input type="text" class="form-control" ng-model='goods.m_id' disabled>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品名称</span>
+						<input type="text" class="form-control" ng-model='goods.m_name'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品标题</span>
+						<input type="text" class="form-control" ng-model='goods.m_title'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品内容</span>
+						<input type="text" class="form-control" ng-model='goods.m_content'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品说明</span>
+						<input type="text" class="form-control" ng-model='goods.m_detail'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品价钱</span>
+						<input type="text" class="form-control" ng-model='goods.m_price'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品数量</span>
+						<input type="text" class="form-control" ng-model='goods.m_number'>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品尺寸</span>
+						<select class="form-control" ng-model='addMall.size'>
+							<option ng-repeat='s in size track by $index'>
+								{{s.s_name}}
+							</option>
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品颜色</span>
+						<select class="form-control" ng-model='addMall.color'>
+							<option ng-repeat='c in color track by $index'>
+								{{c.c_name}}
+							</option>
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品类型</span>
+						<select class="form-control" ng-model='addMall.type'>
+							<option ng-repeat='t in type track by $index'>
+								{{t.t_name}}
+							</option>
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">商品图片</span>
+						<!--<img src="" class="img-responsive" alt="Responsive image">-->
+						<input id="specialrecommendfile" type="file" size="30" name="file"> 
+						<input type=hidden class="span5" id="specialRecommendPic" name="riIndexPic">
+					</div>
+				</div>
+			</form>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" ng-click="modifyMall()" class="btn btn-primary">确认</button>
+			</div>
+		</div>
+	</div>
+</div>

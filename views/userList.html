@@ -1,0 +1,30 @@
+<div class="container-fluid">
+	<div class="col-md-12">
+		<div class="alert alert-info" role="alert">用户管理</div>
+		<button type="button" class="btn btn-primary">新增</button>
+		<br /><br />
+		<table class="table table-striped ">
+			<thead>
+				<td>序号</td>
+				<td>用户名</td>
+				<td>操作</td>
+			</thead>
+			<tbody>
+				<tr ng-repeat='user in list track by $index'>
+					<td>{{user.u_id}}</td>
+					<td ng-bind='user.u_name'></td>
+					<td>
+						<button type="button" class="btn btn-primary">修改</button>
+						<button type="button" class="btn btn-danger">删除</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div>
+			<uib-pagination boundary-links='true' ng-change="selectPage()" next-text='下页' previous-text='上页' total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" rotate="false">
+
+			</uib-pagination>
+		</div>
+	</div>
+</div>

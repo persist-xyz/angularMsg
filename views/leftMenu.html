@@ -1,0 +1,14 @@
+<div class="container-fluid">
+	<div class='row'>
+		<div class='col-md-2'>
+			<div class="list-group">
+				<a href="#" class="list-group-item" ui-sref-active='active' ng-repeat='o in leftRoute' ui-sref={{o.state}}>{{o.text}}</a>
+			</div>
+		</div>
+		<div class='col-md-10' ui-view='userList'></div>
+		<div class='col-md-10' ui-view='mallList'></div>
+		<div class='col-md-10' ui-view='sizeList'></div>
+		<div class='col-md-10' ui-view='colorList'></div>
+		<div class='col-md-10' ui-view='classList'></div>
+	</div>
+</div>
